@@ -11,6 +11,14 @@
 |
 */
 
+use app\Hello;
+
 $router->get('/', function () use ($router) {
-    return $router->app->version();
+    // return $router->app->version();
+    $users = App\User::all()->toJson();
+
+    echo $users;
+    
 });
+
+

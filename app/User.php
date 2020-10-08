@@ -1,32 +1,12 @@
-<?php
+<?php namespace App;
 
-namespace App;
+use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 
-use Illuminate\Auth\Authenticatable;
-use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
-use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
-use Illuminate\Database\Eloquent\Model;
-use Laravel\Lumen\Auth\Authorizable;
+// Changed the actual User.php into User.original.php
+// This file is added for now to test the database connection.
 
-class User extends Model implements AuthenticatableContract, AuthorizableContract
-{
-    use Authenticatable, Authorizable;
+class User extends Eloquent {
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'name', 'email',
-    ];
+    protected $collection = 'users';
 
-    /**
-     * The attributes excluded from the model's JSON form.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password',
-    ];
 }
