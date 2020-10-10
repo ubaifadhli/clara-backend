@@ -11,9 +11,14 @@
 |
 */
 
+use Illuminate\Support\Facades\Hash;
+
 $factory->define(App\User::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->name,
         'email' => $faker->email,
+        'password' => Hash::make('password'),
+        'registration_number' => $faker->numberBetween(1000000000, 2000000000),
+        'role' => 'lecturer'
     ];
 });
