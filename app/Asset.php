@@ -9,11 +9,11 @@ use Jenssegers\Mongodb\Eloquent\Model;
 use Laravel\Lumen\Auth\Authorizable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Model implements AuthenticatableContract, AuthorizableContract, JWTSubject
+class Asset extends Model implements AuthenticatableContract, AuthorizableContract, JWTSubject
 {
     use Authenticatable, Authorizable;
 
-    protected $collection = 'users';
+    protected $collection = 'assets';
 
     /**
      * The attributes that are mass assignable.
@@ -21,7 +21,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'registration_number', 'role', 'password'
+        'asset_id', 'asset_name', 'quantity', 'condition', 'picture'
     ];
 
     /**
@@ -29,9 +29,6 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      *
      * @var array
      */
-    protected $hidden = [
-        'password',
-    ];
 
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
