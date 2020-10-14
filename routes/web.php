@@ -25,9 +25,11 @@ $router->group(['middleware' => 'auth','prefix' => 'api'], function () use ($rou
 {
     $router->get('profile', 'AuthController@profile');
     $router->get('logout', 'AuthController@logout');
+    $router->get('rooms', 'RoomController@index');
+    $router->get('room/{id}', 'RoomController@show');
 });
 
-$router->group(['prefix' => 'api'], function () use ($router) 
+$router->group(['middleware' => 'guest', 'prefix' => 'api'], function () use ($router) 
 {
    $router->post('register', 'AuthController@register');
    $router->post('login', 'AuthController@login');
