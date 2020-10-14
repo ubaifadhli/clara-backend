@@ -21,8 +21,6 @@ $router->get('/', function () use ($router) {
     
 });
 
-<<<<<<< HEAD
-=======
 $router->group(['middleware' => 'auth','prefix' => 'api'], function () use ($router)
 {
     $router->get('profile', 'AuthController@profile');
@@ -41,4 +39,3 @@ $router->group(['prefix' => 'api'], function () use ($router)
 //     return \Illuminate\Support\Str::random(32);
 // });
 
->>>>>>> master
