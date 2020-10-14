@@ -21,6 +21,8 @@ $router->get('/', function () use ($router) {
     
 });
 
+
+
 $router->group(['middleware' => 'auth','prefix' => 'api'], function () use ($router)
 {
     $router->get('profile', 'AuthController@profile');
@@ -32,7 +34,9 @@ $router->group(['prefix' => 'api'], function () use ($router)
    $router->post('register', 'AuthController@register');
    $router->post('login', 'AuthController@login');
 
+   $router->get('asset_reservation/create_dummy','AssetReservationController@create_dummy');
 });
+
 
 // Use this route for generate key and paste it to APP_KEY .env (Development only)
 // $router->get('/key', function() {
