@@ -29,7 +29,7 @@ $router->group(['middleware' => 'auth','prefix' => 'api'], function () use ($rou
     $router->get('room/{id}', 'RoomController@show');
 });
 
-$router->group(['middleware' => 'guest', 'prefix' => 'api'], function () use ($router) 
+$router->group(['prefix' => 'api'], function () use ($router) 
 {
    $router->post('register', 'AuthController@register');
    $router->post('login', 'AuthController@login');
