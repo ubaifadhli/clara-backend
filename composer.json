@@ -6,16 +6,11 @@
     "type": "project",
     "require": {
         "php": "^7.2",
-<<<<<<< HEAD
-        "jenssegers/mongodb": "3.6.5",
-        "laravel/lumen-framework": "^6.0",
-        "mongodb/mongodb": "^1.7"
-=======
+        "mongodb/mongodb": "^1.7",
         "chuckrincon/lumen-config-discover": "^1.0",
         "jenssegers/mongodb": "3.6.5",
         "laravel/lumen-framework": "^6.0",
         "tymon/jwt-auth": "dev-develop"
->>>>>>> master
     },
     "require-dev": {
         "fzaninotto/faker": "^1.4",
