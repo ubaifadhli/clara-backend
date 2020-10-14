@@ -4,6 +4,11 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
+<<<<<<< HEAD
+    "content-hash": "4505529bb51f2bd1dcf204d161eb0cc5",
+    "packages": [
+        {
+=======
     "content-hash": "7b95c11352a32dacee630af084c3ff19",
     "packages": [
         {
@@ -48,6 +53,7 @@
             "time": "2019-08-23T19:24:14+00:00"
         },
         {
+>>>>>>> master
             "name": "composer/package-versions-deprecated",
             "version": "1.11.99",
             "source": {
@@ -100,6 +106,23 @@
                 }
             ],
             "description": "Composer plugin that provides efficient querying for installed package versions (no runtime IO)",
+<<<<<<< HEAD
+            "funding": [
+                {
+                    "url": "https://packagist.com",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/composer",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/composer/composer",
+                    "type": "tidelift"
+                }
+            ],
+=======
+>>>>>>> master
             "time": "2020-08-25T05:50:16+00:00"
         },
         {
@@ -1610,6 +1633,19 @@
                 "mongo",
                 "mongodb"
             ],
+<<<<<<< HEAD
+            "funding": [
+                {
+                    "url": "https://github.com/jenssegers",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/jenssegers/mongodb",
+                    "type": "tidelift"
+                }
+            ],
+=======
+>>>>>>> master
             "time": "2020-09-10T06:39:18+00:00"
         },
         {
@@ -1699,6 +1735,8 @@
             "time": "2020-03-13T20:24:43+00:00"
         },
         {
+<<<<<<< HEAD
+=======
             "name": "lcobucci/jwt",
             "version": "3.3.3",
             "source": {
@@ -1754,6 +1792,7 @@
             "time": "2020-08-20T13:22:28+00:00"
         },
         {
+>>>>>>> master
             "name": "mongodb/mongodb",
             "version": "1.7.1",
             "source": {
