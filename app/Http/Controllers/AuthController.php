@@ -10,10 +10,10 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:api', ['except' => ['login','register']]);
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth:api', ['except' => ['login','register']]);
+    // }
 
     public function login(Request $request){
         $this->validate($request, [
@@ -36,21 +36,46 @@ class AuthController extends Controller
      * @param  Request  $request
      * @return Response
      */
-    public function register(Request $request)
+    public function registerStudent(Request $request)
     {
         $this->validate($request, [
             'name' => 'required|string',
             'email' => 'required|email|unique:users',
             'password' => 'required',
-            'registration_number' => 'required'
+            'nrp' => 'required',
+            'class' => 'required'
         ]);
         
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'registration_number' => $request->registration_number,
+            'nrp' => $request->nrp,
+            'class' => $request->class,
             'role' => 'student',
+        ]);
+
+        return response()->json([
+            'message' => 'Successfully create account',
+            'user' => $user
+        ]);
+    }
+
+    public function registerLecturer(Request $request)
+    {
+        $this->validate($request, [
+            'name' => 'required|string',
+            'email' => 'required|email|unique:users',
+            'password' => 'required',
+            'nip' => 'required',
+        ]);
+        
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'nip' => $request->nip,
+            'role' => 'lecturer',
         ]);
 
         return response()->json([

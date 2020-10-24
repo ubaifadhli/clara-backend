@@ -33,10 +33,9 @@ $router->group(['middleware' => 'auth','prefix' => 'api'], function () use ($rou
 
 $router->group(['prefix' => 'api'], function () use ($router) 
 {
-   $router->post('register', 'AuthController@register');
-   $router->post('login', 'AuthController@login');
-
-   $router->get('asset_reservation/create_dummy','AssetReservationController@create_dummy');
+    $router->post('register/lecturer', 'AuthController@registerLecturer');
+    $router->post('register/student', 'AuthController@registerStudent');
+    $router->post('login', 'AuthController@login');
 });
 
 
