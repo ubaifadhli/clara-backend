@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Room;
+use App\Asset;
 use Illuminate\Http\Request;
 
-class RoomController extends Controller
+class AssetController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class RoomController extends Controller
      */
     public function index()
     {
-        $rooms = Room::paginate(10);
+        $rooms = Asset::paginate(6);
         return response()->json($rooms);
     }
 
@@ -26,7 +26,7 @@ class RoomController extends Controller
      */
     public function show($id)
     {
-        $room = Room::findOrFail($id);
+        $room = Asset::findOrFail($id);
         return response()->json($room);
     }
 
