@@ -14,8 +14,8 @@ class AssetController extends Controller
      */
     public function index()
     {
-        $rooms = Asset::paginate(6);
-        return response()->json($rooms);
+        $assets = Asset::paginate(8);
+        return response()->json($assets);
     }
 
     /**
@@ -26,8 +26,45 @@ class AssetController extends Controller
      */
     public function show($id)
     {
-        $room = Asset::findOrFail($id);
-        return response()->json($room);
+        $asset = Asset::findOrFail($id);
+        return response()->json($asset);
     }
 
+
+    public function search(Request $request){
+        $name = $request->query('name');
+
+        if($name == null){
+            return response()->json([
+                'message' => 'Missing query value'
+            ]);
+        }
+
+        $name = '%'.$name.'%';
+        $assets = Asset::where('name', 'like', $name)->get();
+
+        return response()->json($assets);
+    }
+
+    public function filter(Request $request){
+        $type = $request->query('type', 'item');
+        $assets = Asset::where('type', $type)->paginate(8);
+        return response()->json($assets);
+    }
+
+    public function sort(Request $request){
+        $sort = $request->query('sortBy', 'asc');
+
+        if ($sort == 'asc'){
+            $assets = Asset::orderBy('name')->paginate(8);
+        } else if ($sort == 'desc'){
+            $assets = Asset::orderBy('name', 'desc')->paginate(8);
+        } else {
+            return response()->json([
+                'message' => 'Sort only ascending and descending'
+            ]);
+        }
+
+        return response()->json($assets);
+    }
 }
