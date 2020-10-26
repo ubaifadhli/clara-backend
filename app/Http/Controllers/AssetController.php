@@ -35,9 +35,7 @@ class AssetController extends Controller
         $name = $request->query('name');
 
         if($name == null){
-            return response()->json([
-                'message' => 'Missing query value'
-            ]);
+            return response()->json(Asset::paginate(8));
         }
 
         $name = '%'.$name.'%';
@@ -59,10 +57,6 @@ class AssetController extends Controller
             $assets = Asset::orderBy('name')->paginate(8);
         } else if ($sort == 'desc'){
             $assets = Asset::orderBy('name', 'desc')->paginate(8);
-        } else {
-            return response()->json([
-                'message' => 'Sort only ascending and descending'
-            ]);
         }
 
         return response()->json($assets);
