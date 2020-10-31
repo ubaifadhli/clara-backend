@@ -12,6 +12,7 @@
 */
 
 use app\Hello;
+use Illuminate\Support\Facades\Hash;
 
 $router->get('/', function () use ($router) {
     // return $router->app->version();
@@ -41,9 +42,7 @@ $router->group(['prefix' => 'api'], function () use ($router)
     $router->post('login', 'AuthController@login');
 });
 
-
 // Use this route for generate key and paste it to APP_KEY .env (Development only)
 // $router->get('/key', function() {
 //     return \Illuminate\Support\Str::random(32);
 // });
-
