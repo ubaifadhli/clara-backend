@@ -39,7 +39,7 @@ class AuthController extends Controller
     public function registerStudent(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required|string',
+            'full_name' => 'required|string',
             'email' => 'required|email|unique:users',
             'password' => 'required',
             'nrp' => 'required',
@@ -47,12 +47,13 @@ class AuthController extends Controller
         ]);
         
         $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
+            'full_name' => $request->full_name,
+            'image' => 'default.png',
             'nrp' => $request->nrp,
             'class' => $request->class,
-            'role' => 'student',
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => 'Student',
         ]);
 
         return response()->json([
@@ -71,11 +72,12 @@ class AuthController extends Controller
         ]);
         
         $user = User::create([
-            'name' => $request->name,
+            'full_name' => $request->full_name,
+            'image' => 'default.png',
+            'nip' => $request->nip,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'nip' => $request->nip,
-            'role' => 'lecturer',
+            'role' => 'Lecturer',
         ]);
 
         return response()->json([
