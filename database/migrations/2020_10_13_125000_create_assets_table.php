@@ -15,6 +15,7 @@ class CreateAssetsTable extends Migration
     {
         Schema::create('assets', function (Blueprint $collection) {
             $collection->index('name');
+            $collection->index('type');
         });
     }
 
@@ -25,6 +26,6 @@ class CreateAssetsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('rooms');
+        Schema::dropIfExists('assets');
     }
 }

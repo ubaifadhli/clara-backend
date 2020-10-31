@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Jenssegers\Mongodb\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUsersTable extends Migration
+class CreateReservationsCollection extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $collections) {
-            $collections->index('full_name');
-            $collections->index('role');
-            $collections->index('nrp');
-            $collections->index('nip');
+        Schema::create('reservations', function (Blueprint $collection) {
+            $collection->index('created_at');
+            $collection->index('asset.type');
+            $collection->index('status');
         });
     }
 
@@ -28,6 +27,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('reservations');
     }
 }
