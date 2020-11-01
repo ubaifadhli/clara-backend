@@ -40,6 +40,7 @@ $router->group(['prefix' => 'api'], function () use ($router)
     $router->get('asset/{id}', 'AssetController@show');
     $router->get('reservations', 'ReservationController@index');
     $router->post('reservations', 'ReservationController@create');
+    $router->get('reservations/{id}', 'ReservationController@read');
     // $router->get
 });
 
