@@ -49,4 +49,15 @@ class ReservationController extends Controller {
         return response()->json($reservation);
     }
 
+    public function update(Request $request, $id) {
+        $reservation = Reservation::findOrFail($id);
+        $reservation->update([
+            'status' => $request->status
+        ]);
+        return response()->json([
+            'message' => 'Status updated successfully',
+            'reservation' => $reservation
+        ]);
+    }
+
 }
