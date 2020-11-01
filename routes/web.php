@@ -11,9 +11,6 @@
 |
 */
 
-use app\Hello;
-use Illuminate\Support\Facades\Hash;
-
 $router->get('/', function () use ($router) {
     // return $router->app->version();
     $users = App\User::all()->toJson();
@@ -21,8 +18,6 @@ $router->get('/', function () use ($router) {
     echo $users;
     
 });
-
-
 
 $router->group(['middleware' => 'auth','prefix' => 'api'], function () use ($router)
 {
@@ -33,6 +28,7 @@ $router->group(['middleware' => 'auth','prefix' => 'api'], function () use ($rou
     $router->get('assets/filter','AssetController@filter');
     $router->get('assets/sort', 'AssetController@sort');
     $router->get('asset/{id}', 'AssetController@show');
+    
 });
 
 $router->group(['prefix' => 'api'], function () use ($router) 
@@ -40,6 +36,11 @@ $router->group(['prefix' => 'api'], function () use ($router)
     $router->post('register/lecturer', 'AuthController@registerLecturer');
     $router->post('register/student', 'AuthController@registerStudent');
     $router->post('login', 'AuthController@login');
+    // Percobaan untuk dev
+    $router->get('asset/{id}', 'AssetController@show');
+    $router->get('reservations', 'ReservationController@index');
+    $router->post('reservations', 'ReservationController@create');
+    // $router->get
 });
 
 // Use this route for generate key and paste it to APP_KEY .env (Development only)

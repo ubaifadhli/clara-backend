@@ -6,10 +6,15 @@ use Jenssegers\Mongodb\Eloquent\Model;
 
 class Reservation extends Model {
     protected $collection = 'reservations';
+    public $timestamps = false;
 
-    protected $fillable = [
-        'description', 'quantity', 'asset', 'user', 'status', 'datetime'
-    ];
+    protected $guarded = [];
 
+    public function user() {
+        return $this->embedsOne(User::class);
+    }
 
+    public function asset() {
+        return $this->embedsOne(Asset::class);
+    }
 }
