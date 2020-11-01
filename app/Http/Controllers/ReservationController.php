@@ -44,4 +44,9 @@ class ReservationController extends Controller {
         ]);
     }
 
+    public function read($id) {
+        $reservation = Reservation::findOrFail($id);
+        return response()->json($reservation);
+    }
+
 }
