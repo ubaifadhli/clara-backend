@@ -41,6 +41,7 @@ $router->group(['prefix' => 'api'], function () use ($router)
     $router->get('reservations', 'ReservationController@index');
     $router->post('reservations', 'ReservationController@create');
     $router->get('reservations/{id}', 'ReservationController@read');
+    $router->put('reservations/{id}', 'ReservationController@update');
     // $router->get
 });
 
