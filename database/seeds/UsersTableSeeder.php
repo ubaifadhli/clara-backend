@@ -15,7 +15,6 @@ class UsersTableSeeder extends Seeder
         DB::collection('users')->insert([
             [
                 'full_name' => 'Fajar Septian Nugraha',
-                'image' => \Illuminate\Support\Str::random(8) . '.jpg',
                 'nrp' => 2110181042,
                 'class' => '3 D4 IT B',
                 'email' => 'fajarsn99@it.student.pens.ac.id',
@@ -24,7 +23,6 @@ class UsersTableSeeder extends Seeder
             ],
             [
                 'full_name' => 'Tri Harsono S.Si, M.Kom, Ph.D',
-                'image' => \Illuminate\Support\Str::random(8) . '.jpg',
                 'nip' => 196901071994031001,
                 'email' => 'triharsono@pens.ac.id',
                 'password' => Hash::make('password'),

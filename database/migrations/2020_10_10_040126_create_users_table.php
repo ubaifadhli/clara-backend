@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration
             $collections->index('role');
             $collections->index('nrp');
             $collections->index('nip');
+            $collections->unique('email');
         });
     }
 

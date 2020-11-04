@@ -65,7 +65,7 @@ class AuthController extends Controller
     public function registerLecturer(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required|string',
+            'full_name' => 'required|string',
             'email' => 'required|email|unique:users',
             'password' => 'required',
             'nip' => 'required',
