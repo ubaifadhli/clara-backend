@@ -19,7 +19,7 @@ $router->get('/', function () use ($router) {
 
 });
 
-$router->group(['middleware' => ['cors', 'auth'],'prefix' => 'api'], function () use ($router)
+$router->group(['middleware' => 'auth','prefix' => 'api'], function () use ($router)
 {
     $router->get('profile', 'AuthController@profile');
     $router->get('logout', 'AuthController@logout');
@@ -34,7 +34,7 @@ $router->group(['middleware' => ['cors', 'auth'],'prefix' => 'api'], function ()
     $router->put('reservations/{id}', 'ReservationController@update');
 });
 
-$router->group(['middleware' => 'cors', 'prefix' => 'api'], function () use ($router)
+$router->group(['prefix' => 'api'], function () use ($router)
 {
     $router->post('register/lecturer', 'AuthController@registerLecturer');
     $router->post('register/student', 'AuthController@registerStudent');
