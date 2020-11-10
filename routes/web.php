@@ -30,6 +30,7 @@ $router->group(['middleware' => 'auth','prefix' => 'api'], function () use ($rou
     $router->get('asset/{id}', 'AssetController@show');
     $router->get('reservations', 'ReservationController@index');
     $router->post('reservations', 'ReservationController@create');
+    $router->get('reservations/recent', 'ReservationController@recent');
     $router->get('reservations/{id}', 'ReservationController@read');
     $router->put('reservations/{id}', 'ReservationController@update');
 });

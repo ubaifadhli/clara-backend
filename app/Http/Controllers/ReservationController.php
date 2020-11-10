@@ -18,9 +18,11 @@ class ReservationController extends Controller {
 
     public function create(Request $request) {
         $this->validator($request->all())->validate();
-        $asset = Asset::findOrFail($request->asset_id)->toArray();
-        $user = User::findOrFail($request->user_id)->toArray();
-        // $user = Auth::user();
+        $asset = Asset::findOrFail($request->asset_id)->makeHidden(['_id'])->toArray();
+        if($request->quantity != 0){
+            $asset['quantity'] = $request->quantity;
+        }
+        $user = Auth::user();
         $reservation = Reservation::create([
             'description' => $request->description,
             'begin' => $request->begin,
@@ -58,6 +60,11 @@ class ReservationController extends Controller {
             'message' => 'Status updated successfully',
             'reservation' => $reservation
         ]);
+    }
+
+    public function recent(){
+        $reservations = Reservation::orderBy('begin', 'desc')->limit(5)->get();
+        return response()->json($reservations);
     }
 
 }
