@@ -67,4 +67,25 @@ class ReservationController extends Controller {
         return response()->json($reservations);
     }
 
+    public function getCountReservation(Request $request){
+        $status = $request->query('status', 'all');
+        switch($status){
+            case 'waiting':
+                $count = Reservation::where('status', 'Waiting on approval')->count();
+                break;
+            case 'reserve':
+                $count = Reservation::where('status', 'On Reservation')->count();
+                break;
+            case 'return':
+                $count = Reservation::where('status', 'Returned')->count();
+                break;
+            case 'denied':
+                $count = Reservation::where('status', 'Denied')->count();
+                break;
+            default:
+                $count = Reservation::count();
+        }
+        return response()->json([ 'count' => $count ]);
+    }
+
 }
