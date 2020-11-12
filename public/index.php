@@ -1,5 +1,5 @@
 <?php
-
+use Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
 | Create The Application
@@ -25,4 +25,11 @@ $app = require __DIR__.'/../bootstrap/app.php';
 |
 */
 
-$app->run();
+$request = Request::capture();
+$app->run($request);
+
+// The configuration above is used for deploying to DO server.
+// If you find any problem while serving locally (localhost),
+// comment 2 lines above and uncomment the line below.
+
+// $app->run();
