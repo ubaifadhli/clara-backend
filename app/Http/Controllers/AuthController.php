@@ -48,7 +48,6 @@ class AuthController extends Controller
         
         $user = User::create([
             'full_name' => $request->full_name,
-            'image' => 'default.png',
             'nrp' => $request->nrp,
             'class' => $request->class,
             'email' => $request->email,
@@ -73,7 +72,6 @@ class AuthController extends Controller
         
         $user = User::create([
             'full_name' => $request->full_name,
-            'image' => 'default.png',
             'nip' => $request->nip,
             'email' => $request->email,
             'password' => Hash::make($request->password),

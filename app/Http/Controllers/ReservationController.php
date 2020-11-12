@@ -11,8 +11,49 @@ use Illuminate\Support\Facades\Validator;
 
 class ReservationController extends Controller {
     
-    public function index() {
-        $reservations = Reservation::paginate(8);
+    /* public function index(Request $request) {
+        $role = $request->query('role', 'lecturer');
+
+        $limit = $request->query('limit', 0);
+        if($limit > 0){
+            if ($role == "student"){
+                $reservations = Reservation::where('user', (object) User::find(Auth::id())->toArray())
+                ->orderBy('begin', 'desc')->limit(5)->get();
+            } else {
+                $reservations = Reservation::orderBy('begin', 'desc')->limit(5)->get();
+            }
+        } else {
+            if ($role == "student"){
+                $reservations = Reservation::where('user', (object) User::find(Auth::id())->toArray())
+                ->paginate(8);
+            } else {
+                $reservations = Reservation::paginate(8);
+            }
+        }
+        return response()->json($reservations);
+    } */
+
+    public function indexStudent(Request $request){
+        $limit = $request->query('limit', 0);
+
+        if($limit > 0){
+            $reservations = Reservation::where('user', (object) User::find(Auth::id())->toArray())
+                ->orderBy('begin', 'desc')->limit(5)->get();
+        } else {
+            $reservations = Reservation::where('user', (object) User::find(Auth::id())->toArray())
+                ->paginate(8);
+        }
+        return response()->json($reservations);
+    }
+
+    public function indexLecturer(Request $request){
+        $limit = $request->query('limit', 0);
+
+        if($limit > 0){
+            $reservations = Reservation::orderBy('begin', 'desc')->limit(5)->get();
+        } else {
+            $reservations = Reservation::paginate(8);
+        }
         return response()->json($reservations);
     }
 
@@ -22,7 +63,8 @@ class ReservationController extends Controller {
         if($request->quantity != 0){
             $asset['quantity'] = $request->quantity;
         }
-        $user = Auth::user();
+        $id = Auth::id();
+        $user = User::findOrFail($id)->toArray();
         $reservation = Reservation::create([
             'description' => $request->description,
             'begin' => $request->begin,
@@ -62,11 +104,6 @@ class ReservationController extends Controller {
         ]);
     }
 
-    public function recent(){
-        $reservations = Reservation::orderBy('begin', 'desc')->limit(5)->get();
-        return response()->json($reservations);
-    }
-
     public function getCountReservation(Request $request){
         $status = $request->query('status', 'all');
         switch($status){
@@ -88,4 +125,29 @@ class ReservationController extends Controller {
         return response()->json([ 'count' => $count ]);
     }
 
+    public function getCountStudentReservation(Request $request){
+        $status = $request->query('status', 'all');
+
+        switch($status){
+            case 'waiting':
+                $count = Reservation::where('status', 'Waiting on approval')
+                ->where('user', (object) User::find(Auth::id())->toArray())->count();
+                break;
+            case 'reserve':
+                $count = Reservation::where('status', 'On Reservation')
+                ->where('user', (object) User::find(Auth::id())->toArray())->count();
+                break;
+            case 'return':
+                $count = Reservation::where('status', 'Returned')
+                ->where('user', (object) User::find(Auth::id())->toArray())->count();
+                break;
+            case 'denied':
+                $count = Reservation::where('status', 'Denied')
+                ->where('user', (object) User::find(Auth::id())->toArray())->count();
+                break;
+            default:
+                $count = Reservation::where('user', (object) User::find(Auth::id())->toArray())->count();
+        }
+        return response()->json([ 'count' => $count ]);
+    }
 }

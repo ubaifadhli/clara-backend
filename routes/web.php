@@ -19,6 +19,20 @@ $router->get('/', function () use ($router) {
 
 });
 
+$router->group(['middleware' => ['auth', 'lecturer'],'prefix' => 'api'], function () use ($router)
+{
+    $router->get('reservations', 'ReservationController@indexLecturer');
+    $router->get('reservations/count', 'ReservationController@getCountReservation');
+    $router->put('reservations/{id}', 'ReservationController@update');
+});
+
+$router->group(['middleware' => ['auth', 'student'],'prefix' => 'api'], function () use ($router)
+{
+    $router->get('reservations/student', 'ReservationController@indexStudent');
+    $router->get('reservations/student/count', 'ReservationController@getCountStudentReservation');
+    $router->post('reservations', 'ReservationController@create');
+});
+
 $router->group(['middleware' => 'auth','prefix' => 'api'], function () use ($router)
 {
     $router->get('profile', 'AuthController@profile');
@@ -28,12 +42,7 @@ $router->group(['middleware' => 'auth','prefix' => 'api'], function () use ($rou
     $router->get('assets/filter','AssetController@filter');
     $router->get('assets/sort', 'AssetController@sort');
     $router->get('asset/{id}', 'AssetController@show');
-    $router->get('reservations', 'ReservationController@index');
-    $router->post('reservations', 'ReservationController@create');
-    $router->get('reservations/recent', 'ReservationController@recent');
-    $router->get('reservations/count', 'ReservationController@getCountReservation');
     $router->get('reservations/{id}', 'ReservationController@read');
-    $router->put('reservations/{id}', 'ReservationController@update');
 });
 
 $router->group(['prefix' => 'api'], function () use ($router)
