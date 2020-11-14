@@ -44,12 +44,6 @@ class AssetController extends Controller
         return response()->json($assets);
     }
 
-    public function filter(Request $request){
-        $type = $request->query('type', 'item');
-        $assets = Asset::where('type', $type)->paginate(8);
-        return response()->json($assets);
-    }
-
     public function sort(Request $request){
         $sort = $request->query('sortBy', 'asc');
 

@@ -39,7 +39,6 @@ $router->group(['middleware' => 'auth','prefix' => 'api'], function () use ($rou
     $router->get('logout', 'AuthController@logout');
     $router->get('assets', 'AssetController@index');
     $router->get('asset/search', 'AssetController@search');
-    $router->get('assets/filter','AssetController@filter');
     $router->get('assets/sort', 'AssetController@sort');
     $router->get('asset/{id}', 'AssetController@show');
     $router->get('reservations/{id}', 'ReservationController@read');
