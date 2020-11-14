@@ -15,7 +15,6 @@ class CreateAssetsTable extends Migration
     {
         Schema::create('assets', function (Blueprint $collection) {
             $collection->index('name');
-            $collection->index('type');
         });
     }
 

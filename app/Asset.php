@@ -9,6 +9,6 @@ class Asset extends Model {
     public $timestamps = false;
 
     protected $fillable = [
-        'name', 'type', 'image', 'quantity'
+        'name', 'image', 'quantity'
     ];
 }
