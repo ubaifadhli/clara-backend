@@ -10,28 +10,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class ReservationController extends Controller {
-    
-    /* public function index(Request $request) {
-        $role = $request->query('role', 'lecturer');
-
-        $limit = $request->query('limit', 0);
-        if($limit > 0){
-            if ($role == "student"){
-                $reservations = Reservation::where('user', (object) User::find(Auth::id())->toArray())
-                ->orderBy('begin', 'desc')->limit(5)->get();
-            } else {
-                $reservations = Reservation::orderBy('begin', 'desc')->limit(5)->get();
-            }
-        } else {
-            if ($role == "student"){
-                $reservations = Reservation::where('user', (object) User::find(Auth::id())->toArray())
-                ->paginate(8);
-            } else {
-                $reservations = Reservation::paginate(8);
-            }
-        }
-        return response()->json($reservations);
-    } */
 
     public function indexStudent(Request $request){
         $limit = $request->query('limit', 0);
@@ -59,16 +37,14 @@ class ReservationController extends Controller {
 
     public function create(Request $request) {
         $this->validator($request->all())->validate();
-        $asset = Asset::findOrFail($request->asset_id)->makeHidden(['_id'])->toArray();
-        if($request->quantity != 0){
-            $asset['quantity'] = $request->quantity;
-        }
+        $asset = Asset::findOrFail($request->asset_id)->makeHidden(['_id', 'available'])->toArray();
+        $asset['quantity'] = $request->quantity;
         $id = Auth::id();
         $user = User::findOrFail($id)->toArray();
         $reservation = Reservation::create([
             'description' => $request->description,
-            'begin' => $request->begin,
-            'end' => $request->end,
+            'begin' => date_format(date_create($request->begin), 'd F Y, H:i'),
+            'end' => date_format(date_create($request->end), 'd F Y, H:i'),
             'user' => (object)$user,
             'asset' => (object)$asset,
             'status' => 'Waiting on approval'
@@ -85,6 +61,7 @@ class ReservationController extends Controller {
             'begin' => ['required', 'date'],
             'end' => ['required', 'date'],
             'asset_id' => ['required'],
+            'quantity' => ['required', 'gt:0']
         ]);
     }
 

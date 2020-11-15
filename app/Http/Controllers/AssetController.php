@@ -31,6 +31,7 @@ class AssetController extends Controller
         $asset = new Asset;
         $asset->name = $request->name;
         $asset->quantity = $request->quantity;
+        $asset->available = $request->quantity;
         if($request->hasFile('image')){
             $image = $request->file('image');
             $fileName = time()."-".$image->getClientOriginalName();
@@ -71,6 +72,7 @@ class AssetController extends Controller
         $asset = Asset::findOrFail($id);
         $asset->name = $request->name;
         $asset->quantity = $request->quantity;
+        $asset->available = $request->quantity;
         if($request->hasFile('image')){
             unlink('assets/'.$asset->image);
             $image = $request->file('image');
@@ -133,7 +135,7 @@ class AssetController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string'],
             'image' => ['nullable', 'image'],
-            'quantity' => ['required', 'integer']
+            'quantity' => ['required', 'gt:0']
         ]);
     }
 }
