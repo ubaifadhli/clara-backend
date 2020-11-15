@@ -21,6 +21,9 @@ $router->get('/', function () use ($router) {
 
 $router->group(['middleware' => ['auth', 'lecturer'],'prefix' => 'api'], function () use ($router)
 {
+    $router->post('asset', 'AssetController@store');
+    $router->post('asset/{id}', 'AssetController@update');
+    $router->delete('asset/{id}', 'AssetController@destroy');
     $router->get('reservations', 'ReservationController@indexLecturer');
     $router->get('reservations/count', 'ReservationController@getCountReservation');
     $router->put('reservations/{id}', 'ReservationController@update');
