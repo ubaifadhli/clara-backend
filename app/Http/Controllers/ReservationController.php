@@ -49,6 +49,12 @@ class ReservationController extends Controller {
             'asset' => (object)$asset,
             'status' => 'Waiting on approval'
         ]);
+
+        $reservation->history()->create([
+            'datetime' => date('d F Y, H:i'),
+            'status' => 'Waiting on approval'
+        ]);
+
         return response()->json([
             'message' => 'Successfully create new reservation',
             'reservation' => $reservation
@@ -75,6 +81,12 @@ class ReservationController extends Controller {
         $reservation->update([
             'status' => $request->status
         ]);
+
+        $reservation->history()->create([
+            'datetime' => date('d F Y, H:i'),
+            'status' => $request->status
+        ]);
+
         return response()->json([
             'message' => 'Status updated successfully',
             'reservation' => $reservation
