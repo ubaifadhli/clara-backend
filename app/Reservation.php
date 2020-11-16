@@ -17,4 +17,8 @@ class Reservation extends Model {
     public function asset() {
         return $this->embedsOne(Asset::class);
     }
+
+    public function history(){
+        return $this->embedsMany(History::class);
+    }
 }
