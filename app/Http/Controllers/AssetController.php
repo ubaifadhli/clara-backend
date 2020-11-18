@@ -110,7 +110,7 @@ class AssetController extends Controller
         $name = $request->query('name');
 
         if($name == null){
-            return redirect('api/asset/search');
+            return redirect('api/asset');
         }
 
         $name = '%'.$name.'%';
