@@ -110,7 +110,7 @@ class AssetController extends Controller
         $name = $request->query('name');
 
         if($name == null){
-            return response()->json(Asset::paginate(8));
+            return redirect('api/asset');
         }
 
         $name = '%'.$name.'%';

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Asset;
 use App\Reservation;
 use App\User;
 use Illuminate\Http\Request;
@@ -43,8 +42,8 @@ class ReservationController extends Controller {
         $user = User::findOrFail($id)->toArray();
         $reservation = Reservation::create([
             'description' => $request->description,
-            'begin' => date_format(date_create($request->begin), 'd F Y, H:i'),
-            'end' => date_format(date_create($request->end), 'd F Y, H:i'),
+            'begin' => date_format(date_create($request->begin), 'd F Y'),
+            'end' => date_format(date_create($request->end), 'd F Y'),
             'user' => (object)$user,
             'asset' => (object)$asset,
             'status' => 'Waiting on approval'
@@ -59,6 +58,31 @@ class ReservationController extends Controller {
             'message' => 'Successfully create new reservation',
             'reservation' => $reservation
         ]);
+    }
+
+    public function search(Request $request){
+        $assetName = $request->query('asset');
+        $status = $request->query('status');
+
+        if ($assetName == null && $status == null){
+            if(Auth::user()->role == 'Lecturer'){
+                return redirect('api/reservations');
+            } else {
+                return redirect('api/reservations/student');
+            }
+        } else if ($assetName != null && $status == null) {
+            $assetName = '%'.$assetName.'%';
+            $reservations = Reservation::where('asset.name', 'like', $assetName)->paginate(8);
+            return response()->json($reservations);
+        } else if ($assetName == null && $status != null) {
+            $reservations = Reservation::where('status', $status)->paginate(8);
+            return response()->json($reservations);
+        } else {
+            $assetName = '%'.$assetName.'%';
+            $reservations = Reservation::where('asset.name', 'like', $assetName)
+                            ->where('status', $status)->paginate(8);
+            return response()->json($reservations);
+        }
     }
 
     private function validator(array $data) {
