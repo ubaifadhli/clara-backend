@@ -30,15 +30,13 @@ class AssetController extends Controller
         $this->validator($request->all())->validate();
         $asset = new Asset;
         $asset->name = $request->name;
-        $asset->quantity = $request->quantity;
-        $asset->available = $request->quantity;
+        $asset->quantity = (int)$request->quantity;
+        $asset->available = (int)$request->quantity;
         if($request->hasFile('image')){
             $image = $request->file('image');
             $fileName = time()."-".$image->getClientOriginalName();
             $image->move('assets', $fileName);
             $asset->image = $fileName;
-        } else {
-            $asset->image = "no-image.png";
         }
         $asset->save();
         return response()->json([
@@ -71,8 +69,8 @@ class AssetController extends Controller
         $this->validator($request->all())->validate();
         $asset = Asset::findOrFail($id);
         $asset->name = $request->name;
-        $asset->quantity = $request->quantity;
-        $asset->available = $request->quantity;
+        $asset->quantity = (int)$request->quantity;
+        $asset->available = (int)$request->quantity;
         if($request->hasFile('image')){
             unlink('assets/'.$asset->image);
             $image = $request->file('image');

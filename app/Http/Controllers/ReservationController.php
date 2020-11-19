@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Asset;
 use App\Reservation;
 use App\User;
 use Illuminate\Http\Request;
@@ -14,10 +15,10 @@ class ReservationController extends Controller {
         $limit = $request->query('limit', 0);
 
         if($limit > 0){
-            $reservations = Reservation::where('user', (object) User::find(Auth::id())->toArray())
+            $reservations = Reservation::where('user.email', Auth::user()->email)
                 ->orderBy('begin', 'desc')->limit(5)->get();
         } else {
-            $reservations = Reservation::where('user', (object) User::find(Auth::id())->toArray())
+            $reservations = Reservation::where('user.email', Auth::user()->email)
                 ->paginate(8);
         }
         return response()->json($reservations);
@@ -36,22 +37,22 @@ class ReservationController extends Controller {
 
     public function create(Request $request) {
         $this->validator($request->all())->validate();
-        $asset = Asset::findOrFail($request->asset_id)->makeHidden(['_id', 'available'])->toArray();
-        $asset['quantity'] = $request->quantity;
+        $asset = Asset::findOrFail($request->asset_id)->makeHidden(['available'])->toArray();
+        $asset['quantity'] = (int) $request->quantity;
         $id = Auth::id();
         $user = User::findOrFail($id)->toArray();
         $reservation = Reservation::create([
             'description' => $request->description,
             'begin' => date_format(date_create($request->begin), 'd F Y'),
-            'end' => date_format(date_create($request->end), 'd F Y'),
-            'user' => (object)$user,
-            'asset' => (object)$asset,
-            'status' => 'Waiting on approval'
+            'end' => date_format(date_create($request->end), 'd F Y')
         ]);
 
+        $reservation->user()->create($user);
+
+        $reservation->asset()->create($asset);
+
         $reservation->history()->create([
-            'datetime' => date('d F Y, H:i'),
-            'status' => 'Waiting on approval'
+            'datetime' => date('d F Y, H:i')
         ]);
 
         return response()->json([
