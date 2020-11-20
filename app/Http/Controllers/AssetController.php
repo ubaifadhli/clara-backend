@@ -69,8 +69,16 @@ class AssetController extends Controller
         $this->validator($request->all())->validate();
         $asset = Asset::findOrFail($id);
         $asset->name = $request->name;
-        $asset->quantity = (int)$request->quantity;
-        $asset->available = (int)$request->quantity;
+        if ($asset->quantity > (int)$request->quantity){
+            $asset->available = $asset->available - ($asset->quantity - (int)$request->quantity);
+            if ($asset->available < 0){
+                return response('Error, Available Asset should not be negative', 406);
+            }
+            $asset->quantity = (int)$request->quantity;
+        } else if ($asset->quantity < (int)$request->quantity){
+            $asset->available = $asset->available + ((int)$request->quantity - $asset->quantity);
+            $asset->quantity = (int)$request->quantity;
+        }
         if($request->hasFile('image')){
             unlink('assets/'.$asset->image);
             $image = $request->file('image');
