@@ -78,6 +78,9 @@ class AssetController extends Controller
         } else if ($asset->quantity < (int)$request->quantity){
             $asset->available = $asset->available + ((int)$request->quantity - $asset->quantity);
             $asset->quantity = (int)$request->quantity;
+        } else {
+            $asset->quantity = (int)$request->quantity;
+            $asset->available = (int)$request->quantity;
         }
         if($request->hasFile('image')){
             unlink('assets/'.$asset->image);
