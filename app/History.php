@@ -9,7 +9,7 @@ class History extends Model {
     public $timestamps = false;
 
     protected $fillable = [
-        'datetime', 'status'
+        'datetime', 'status', 'description'
     ];
 
     protected $attributes = [

@@ -14,8 +14,6 @@ class CreateReservationsCollection extends Migration
     public function up()
     {
         Schema::create('reservations', function (Blueprint $collection) {
-            $collection->index('created_at');
-            $collection->index('asset.type');
             $collection->index('status');
         });
     }

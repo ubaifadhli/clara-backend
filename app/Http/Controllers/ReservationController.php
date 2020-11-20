@@ -15,10 +15,10 @@ class ReservationController extends Controller {
         $limit = $request->query('limit', 0);
 
         if($limit > 0){
-            $reservations = Reservation::where('user.email', Auth::user()->email)
+            $reservations = Reservation::where('user', (object) User::find(Auth::id())->toArray())
                 ->orderBy('begin', 'desc')->limit(5)->get();
         } else {
-            $reservations = Reservation::where('user.email', Auth::user()->email)
+            $reservations = Reservation::where('user', (object) User::find(Auth::id())->toArray())
                 ->paginate(8);
         }
         return response()->json($reservations);
@@ -44,12 +44,10 @@ class ReservationController extends Controller {
         $reservation = Reservation::create([
             'description' => $request->description,
             'begin' => date_format(date_create($request->begin), 'd F Y'),
-            'end' => date_format(date_create($request->end), 'd F Y')
+            'end' => date_format(date_create($request->end), 'd F Y'),
+            'user' => (object)$user,
+            'asset' => (object)$asset,
         ]);
-
-        $reservation->user()->create($user);
-
-        $reservation->asset()->create($asset);
 
         $reservation->history()->create([
             'datetime' => date('d F Y, H:i')
@@ -109,7 +107,8 @@ class ReservationController extends Controller {
 
         $reservation->history()->create([
             'datetime' => date('d F Y, H:i'),
-            'status' => $request->status
+            'status' => $request->status,
+            'description' => $request->description
         ]);
 
         return response()->json([
@@ -164,4 +163,5 @@ class ReservationController extends Controller {
         }
         return response()->json([ 'count' => $count ]);
     }
+
 }
