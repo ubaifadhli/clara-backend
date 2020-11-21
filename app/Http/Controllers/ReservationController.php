@@ -111,6 +111,16 @@ class ReservationController extends Controller {
             'description' => $request->description
         ]);
 
+        if ($request->status == 'On Reservation'){
+            $asset = Asset::findOrFail($reservation->asset->_id);
+            $asset->available -= $reservation->asset->quantity;
+            $asset->save();
+        } else if ($request->status == 'Returned'){
+            $asset = Asset::findOrFail($reservation->asset->_id);
+            $asset->available += $reservation->asset->quantity;
+            $asset->save();
+        }
+
         return response()->json([
             'message' => 'Status updated successfully',
             'reservation' => $reservation
@@ -162,6 +172,49 @@ class ReservationController extends Controller {
                 $count = Reservation::where('user', (object) User::find(Auth::id())->toArray())->count();
         }
         return response()->json([ 'count' => $count ]);
+    }
+
+    public function assetRequest(Request $request, $id){
+        $asset = Asset::findOrFail($id);
+        $reservation = Reservation::where('asset.name', $asset->name)->get();
+
+        $date_begin = date_create($request->begin);
+        $date_finish = date_create($request->end);
+        $interval = date_diff($date_begin, $date_finish);
+
+        $day = (int)$date_begin->format('d');
+        $array = [];
+
+        for($i = $day; $i <= $day + (int) $interval->format('%a'); $i++){
+            $quantity = $asset->quantity;
+            foreach($reservation as $r){
+                $reservation_begin = (int)date_format(date_create($r->begin), 'd');
+                $reservation_end = (int)date_format(date_create($r->end), 'd');
+
+                if ($i >= $reservation_begin && $i <= $reservation_end){
+                    $quantity -= $r->asset->quantity;
+                }
+            }
+            array_push($array, $quantity);
+        }
+
+        $min = $array[0];
+
+        for($i = 0; $i < count($array); $i++){
+            if ($array[$i] < $min){
+                $min = $array[$i];
+            }
+        }
+
+        if ($min < (int)$request->quantity){
+            return response()->json([
+                'status' => 'NOT AVAILABLE'
+            ]);
+        } else {
+            return response()->json([
+                'status' => 'AVAILABLE'
+            ]);
+        }
     }
 
 }

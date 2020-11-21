@@ -14,7 +14,7 @@ class CreateAssetsTable extends Migration
     public function up()
     {
         Schema::create('assets', function (Blueprint $collection) {
-            $collection->index('name');
+            $collection->unique('name');
         });
     }
 

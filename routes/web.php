@@ -45,6 +45,7 @@ $router->group(['middleware' => 'auth','prefix' => 'api'], function () use ($rou
     $router->get('assets/sort', 'AssetController@sort');
     $router->get('asset/{id}', 'AssetController@show');
     $router->get('reservations/search', 'ReservationController@search');
+    $router->post('reservation/request/{id}', 'ReservationController@assetRequest');
     $router->get('reservations/{id}', 'ReservationController@read');
 });
 
