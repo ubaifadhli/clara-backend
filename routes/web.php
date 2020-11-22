@@ -12,10 +12,10 @@
 */
 
 $router->get('/', function () use ($router) {
-    // return $router->app->version();
-    $users = App\User::all()->toJson();
+    return $router->app->version();
+    // $users = App\User::all()->toJson();
 
-    echo $users;
+    // echo $users;
 
 });
 

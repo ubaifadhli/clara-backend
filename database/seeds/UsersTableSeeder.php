@@ -15,7 +15,7 @@ class UsersTableSeeder extends Seeder
         DB::collection('users')->insert([
             [
                 'full_name' => 'Fajar Septian Nugraha',
-                'nrp' => 2110181042,
+                'nrp' => "2110181042",
                 'class' => '3 D4 IT B',
                 'email' => 'fajarsn99@it.student.pens.ac.id',
                 'password' => Hash::make('password'),
@@ -23,7 +23,7 @@ class UsersTableSeeder extends Seeder
             ],
             [
                 'full_name' => 'Tri Harsono S.Si, M.Kom, Ph.D',
-                'nip' => 196901071994031001,
+                'nip' => "196901071994031001",
                 'email' => 'triharsono@pens.ac.id',
                 'password' => Hash::make('password'),
                 'role' => 'Lecturer'

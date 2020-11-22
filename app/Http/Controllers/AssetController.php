@@ -83,7 +83,9 @@ class AssetController extends Controller
             $asset->available = (int)$request->quantity;
         }
         if($request->hasFile('image')){
-            unlink('assets/'.$asset->image);
+            if($asset->image != 'no-image.png'){
+                unlink('assets/'.$asset->image);
+            }
             $image = $request->file('image');
             $fileName = time()."-".$image->getClientOriginalName();
             $image->move('assets', $fileName);
@@ -119,7 +121,7 @@ class AssetController extends Controller
         $name = $request->query('name');
 
         if($name == null){
-            return redirect('api/asset');
+            return redirect('api/assets');
         }
 
         $name = '%'.$name.'%';
