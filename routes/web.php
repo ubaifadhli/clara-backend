@@ -19,7 +19,7 @@ $router->get('/', function () use ($router) {
 
 });
 
-$router->group(['middleware' => ['auth', 'lecturer'],'prefix' => 'api'], function () use ($router)
+$router->group(['middleware' => ['auth', 'lecturer']], function () use ($router)
 {
     $router->post('asset', 'AssetController@store');
     $router->post('asset/{id}', 'AssetController@update');
@@ -29,14 +29,14 @@ $router->group(['middleware' => ['auth', 'lecturer'],'prefix' => 'api'], functio
     $router->put('reservations/{id}', 'ReservationController@update');
 });
 
-$router->group(['middleware' => ['auth', 'student'],'prefix' => 'api'], function () use ($router)
+$router->group(['middleware' => ['auth', 'student']], function () use ($router)
 {
     $router->get('reservations/student', 'ReservationController@indexStudent');
     $router->get('reservations/student/count', 'ReservationController@getCountStudentReservation');
     $router->post('reservations', 'ReservationController@create');
 });
 
-$router->group(['middleware' => 'auth','prefix' => 'api'], function () use ($router)
+$router->group(['middleware' => 'auth'], function () use ($router)
 {
     $router->get('profile', 'AuthController@profile');
     $router->get('logout', 'AuthController@logout');
@@ -49,12 +49,9 @@ $router->group(['middleware' => 'auth','prefix' => 'api'], function () use ($rou
     $router->get('reservations/{id}', 'ReservationController@read');
 });
 
-$router->group(['prefix' => 'api'], function () use ($router)
-{
-    $router->post('register/lecturer', 'AuthController@registerLecturer');
-    $router->post('register/student', 'AuthController@registerStudent');
-    $router->post('login', 'AuthController@login');
-});
+$router->post('register/lecturer', 'AuthController@registerLecturer');
+$router->post('register/student', 'AuthController@registerStudent');
+$router->post('login', 'AuthController@login');
 
 // Use this route for generate key and paste it to APP_KEY .env (Development only)
 // $router->get('/key', function() {

@@ -65,9 +65,9 @@ class ReservationController extends Controller {
 
         if ($assetName == null && $status == null){
             if(Auth::user()->role == 'Lecturer'){
-                return redirect('api/reservations');
+                return redirect('reservations');
             } else {
-                return redirect('api/reservations/student');
+                return redirect('reservations/student');
             }
         } else if ($assetName != null && $status == null) {
             $assetName = '%'.$assetName.'%';
