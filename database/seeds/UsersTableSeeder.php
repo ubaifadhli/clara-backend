@@ -16,7 +16,7 @@ class UsersTableSeeder extends Seeder
             [
                 'full_name' => 'Fajar Septian Nugraha',
                 'nrp' => "2110181042",
-                'class' => '3 D4 IT B',
+                'grade' => '3 D4 IT B',
                 'email' => 'fajarsn99@it.student.pens.ac.id',
                 'password' => Hash::make('password'),
                 'role' => 'Student'

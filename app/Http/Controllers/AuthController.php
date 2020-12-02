@@ -43,13 +43,13 @@ class AuthController extends Controller
             'email' => 'required|email|unique:users',
             'password' => 'required',
             'nrp' => 'required',
-            'class' => 'required'
+            'grade' => 'required'
         ]);
         
         $user = User::create([
             'full_name' => $request->full_name,
             'nrp' => $request->nrp,
-            'class' => $request->class,
+            'grade' => $request->grade,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => 'Student',
