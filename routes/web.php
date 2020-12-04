@@ -38,9 +38,9 @@ $router->group(['middleware' => ['auth', 'student']], function () use ($router)
 
 $router->group(['middleware' => 'auth'], function () use ($router)
 {
+    $router->get('asset', 'AssetController@index');
     $router->get('profile', 'AuthController@profile');
     $router->get('logout', 'AuthController@logout');
-    $router->get('assets', 'AssetController@index');
     $router->get('asset/search', 'AssetController@search');
     $router->get('assets/sort', 'AssetController@sort');
     $router->get('asset/{id}', 'AssetController@show');
