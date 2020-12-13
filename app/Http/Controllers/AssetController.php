@@ -35,7 +35,7 @@ class AssetController extends Controller
         if($request->hasFile('image')){
             $image = $request->file('image');
             $fileName = time()."-".$image->getClientOriginalName();
-            $image->move('assets', $fileName);
+            $image->move('image', $fileName);
             $asset->image = $fileName;
         }
         $asset->save();
@@ -83,12 +83,12 @@ class AssetController extends Controller
             $asset->available = (int)$request->quantity;
         }
         if($request->hasFile('image')){
-            if($asset->image != 'no-image.png'){
+            /* if($asset->image != 'no-image.png'){
                 unlink('assets/'.$asset->image);
-            }
+            } */
             $image = $request->file('image');
             $fileName = time()."-".$image->getClientOriginalName();
-            $image->move('assets', $fileName);
+            $image->move('image', $fileName);
             $asset->image = $fileName;
         }
         $asset->save();
@@ -107,9 +107,9 @@ class AssetController extends Controller
     public function destroy($id)
     {
         $asset = Asset::findOrFail($id);
-        if($asset->image != 'no-image.png'){
+        /* if($asset->image != 'no-image.png'){
             unlink('assets/'.$asset->image);
-        }
+        } */
         $asset->delete();
         return response()->json([
             'message' => 'Successfully delete asset',
