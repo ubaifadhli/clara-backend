@@ -13,9 +13,15 @@ class AssetController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $assets = Asset::paginate(8);
+        $name = $request->query('search');
+        if ($name == null){
+            $assets = Asset::paginate(8);
+        } else {
+            $name = '%'.$name.'%';
+            $assets = Asset::where('name', 'like', $name)->paginate(8);
+        }
         return response()->json($assets);
     }
 
