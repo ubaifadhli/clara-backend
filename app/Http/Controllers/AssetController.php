@@ -16,12 +16,29 @@ class AssetController extends Controller
     public function index(Request $request)
     {
         $name = $request->query('search');
+        $pagination = $request->query('pagination');
+
         if ($name == null){
+
+          if($pagination != null && $pagination == "true") {
             $assets = Asset::paginate(8);
+          } else {
+            $assets = Asset::all();
+          }
+
         } else {
+
             $name = '%'.$name.'%';
-            $assets = Asset::where('name', 'like', $name)->paginate(8);
+            $assets = Asset::where('name', 'like', $name);
+
+            if($pagination != null && $pagination == "true") {
+              $assets = $assets->paginate(8);
+            } else {
+              $assets = $assets->get();
+            }
+
         }
+
         return response()->json($assets);
     }
 
